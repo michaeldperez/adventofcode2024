@@ -1,4 +1,5 @@
 #include<vector>
+#include<unordered_map>
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -8,8 +9,12 @@
 auto main() -> int
 {
   int dist{};
+  long simularity{};
+
   std::vector<int> left{};
   std::vector<int> right{};
+
+  std::unordered_map<int, int> freq{};
 
   std::string line{};
 
@@ -26,6 +31,8 @@ auto main() -> int
     }
   }
 
+  file.close();
+
   std::sort(left.begin(), left.end());
   std::sort(right.begin(), right.end());
 
@@ -34,9 +41,31 @@ auto main() -> int
     dist += std::abs(*lit - *rit);
   }
 
-  std::cout << "Total distance: " << dist << '\n';
+  std::cout << "Part 1 - Total distance: " << dist << '\n';
 
-  file.close();
+
+  for (auto num : left)
+  {
+    if (!freq.contains(num))
+    {
+      freq.insert(std::make_pair(num, 0));
+    }
+  } 
+
+  for (auto num : right)
+  {
+    if (freq.contains(num))
+    {
+      freq[num] += 1;
+    }
+  }
+
+  for (auto const& [key, val] : freq)
+  {
+    simularity += (key * val);
+  }
+
+  std::cout << "Part 2 - Simularity score: " << simularity << '\n';
 
   return 0;
 }
