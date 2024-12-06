@@ -76,7 +76,7 @@ auto main() -> int
           nums.push_back(i);
         }
 
-        sum_of_multiplies += nums[0] *  nums[1];
+        sum_of_multiplies += nums[0] * nums[1];
       }
     }
   }
