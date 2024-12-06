@@ -7,7 +7,6 @@
 #include<algorithm>
 #include<functional>
 #include<numeric>
-#include<boost/regex.hpp>
 
 struct not_digit
 {
@@ -20,29 +19,38 @@ struct not_digit
 auto main() -> int
 {
   int sum_of_multiplies{};
-  std::regex mul{"(mul\\(\\d+,\\d+\\))"};
+
+  std::regex mul{"(mul\\(\\d{1,3},\\d{1,3}\\))"};
   std::regex comma_re{","};
 
- // boost::regex remove_between("(?<=don't\\(\\))(.*?)(?=do\\(\\))");
-//  boost::regex remove_end("(?<=don't\\(\\))(.*?)(?=!do\\(\\))");
-//  boost::regex remove_end("(?<=don't\\(\\))(.*?)(?=[^do\\(\\)])$");
-
   std::string line{};
+
   std::fstream file{"instructions"};
 
   if (file.is_open())
   {
-    
     while (std::getline(file, line))
     { 
-//      line = boost::regex_replace(line, remove_between, "#####", boost::match_extra);
-  //    std::cout << "line: " << line << '\n';
+      std::string::size_type dont_pos{};
 
-  //    std::cout << '\n';
+      while (dont_pos != std::string::npos)
+      {
+        std::string::size_type do_pos;
+        
+        dont_pos = line.find("don't()");
 
- //     line = boost::regex_replace(line, remove_end, "#####", boost::match_extra);
+        if (dont_pos != std::string::npos)
+        {
+          do_pos = line.find("do()", dont_pos);
 
-  //    std::cout << "line: " << line << '\n';
+          if (do_pos != std::string::npos)
+          {
+            line.erase(dont_pos, do_pos - dont_pos); 
+          } else {
+            line.erase(dont_pos);
+          }
+        } 
+      }
 
       auto instructions_begin = std::sregex_iterator(line.begin(), line.end(), mul);
 
@@ -53,7 +61,6 @@ auto main() -> int
         std::vector<int> nums{};
         std::smatch match = *i;
         std::string match_str = match.str();
-        std::cout << "Match: " << match_str << '\n';
         match_str = std::regex_replace(match_str, comma_re, " ");
 
         not_digit not_a_digit;
@@ -69,7 +76,7 @@ auto main() -> int
           nums.push_back(i);
         }
 
-        sum_of_multiplies += std::accumulate(nums.begin(), nums.end(), 1, std::multiplies<int>());
+        sum_of_multiplies += nums[0] *  nums[1];
       }
     }
   }
