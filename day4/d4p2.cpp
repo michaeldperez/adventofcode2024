@@ -7,7 +7,7 @@ const std::string PUZZLE_FILE{"word_search"};
 
 std::vector<std::vector<char>> create_puzzle(const std::string filename);
 bool in_bounds(int i, int j, int n);
-int check_cross(int i, int j, std::vector<std::vector<char>>& puzzle);
+int check_cross(int i, int j, const std::vector<std::vector<char>>& puzzle);
 
 auto main() -> int
 {
@@ -53,7 +53,7 @@ bool in_bounds(int i, int j, int n)
   return i >= 0 && i < n && j >= 0 && j < n;
 }
 
-int check_cross(int i, int j, std::vector<std::vector<char>>& puzzle)
+int check_cross(int i, int j, const std::vector<std::vector<char>>& puzzle)
 {
 
   int n = puzzle.size();
