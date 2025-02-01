@@ -60,7 +60,7 @@ int main()
 
   updates.erase(new_beg, updates.end());
 
-  int sum_of_mids = std::accumulate(updates.begin(), updates.end(), 0, [](int sum, std::vector<int>&update){
+  int sum_of_mids = std::accumulate(updates.begin(), updates.end(), 0, [](int sum, std::vector<int>& update){
      auto mid = update.begin() + update.size() / 2;
      return sum + *mid;
   });
