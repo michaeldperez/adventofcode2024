@@ -18,10 +18,10 @@ std::unordered_map<std::string, std::pair<int,int>> DIRECTIONS = {
 };
 
 std::unordered_map<std::string, std::string> TURNS = {
-  {"UP", "RIGHT"},
-  {"RIGHT", "DOWN"},
-  {"DOWN", "LEFT"},
-  {"LEFT", "UP"},
+  {"UP",    "RIGHT" },
+  {"RIGHT", "DOWN"  },
+  {"DOWN",  "LEFT"  },
+  {"LEFT",  "UP"    },
 };
 
 bool in_bounds(int x, int y, int max_x, int max_y);
@@ -85,7 +85,6 @@ int main()
       x = next_x;
       y = next_y;
     }   
-
   }
 
   std::cout << "Distinct positions visited: " << distinct_positions << '\n';
